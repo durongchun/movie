@@ -9,7 +9,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: $headingFont;
+  font-family: $bodyFont;
 }
 
 h1,
@@ -20,6 +20,18 @@ p {
   margin-top: 0;
 }
 
+nav a {
+  font-family: $headingFontLight;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin-top: 1rem;
+}
+
 p {
-  line-height: 1.4;
+  line-height: 0.8;
+  color: rgb(235, 221, 202);
 }

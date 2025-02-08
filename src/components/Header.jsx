@@ -2,7 +2,7 @@ function Header() {
   return (
     <header>
       <div id="header-menu-logo">
-        <img src="" alt="MVDBlogo" />
+        <img src="../../public/movielogo-removebg-preview.png" alt="MVDBlogo" />
         <div id="menu">
           <a href="">Home</a>
           <a href="">About</a>
@@ -10,7 +10,6 @@ function Header() {
           <a href="">Watch Later</a>
         </div>
       </div>
-      <div></div>
     </header>
   );
 }

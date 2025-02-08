@@ -8,8 +8,11 @@ $grey: #e1e1e1;
 $red: #d75b5b;
 
 // Type
-$bodyFont: 'Roboto', sans-serif;
-$headingFont: 'Alatsi', sans-serif;
+$bodyFont: "Lato", sans-serif;
+$headingFont: "Gotham-Rounded-Book", sans-serif;
+$headingFontLight: "Gotham-Rounded-Light", sans-serif;
 
 // Layout
-$section-padding: em(16) em(20);
+$section-padding: em(40) em(100);
+$section2-padding: em(0) em(100) em(10) em(100);
+$section3-padding: em(0) em(100) em(0) em(65);
