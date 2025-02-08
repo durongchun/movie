@@ -2,15 +2,25 @@ import React, { useEffect, useState } from "react";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
+const categories = [
+  { key: "popular", label: "Popular" },
+  { key: "top_rated", label: "Top Rated" },
+  { key: "now_playing", label: "Now Playing" },
+  { key: "upcoming", label: "Upcoming" },
+];
 
 const PageHome = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selected, setSelected] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("popular");
 
   useEffect(() => {
-    const url = `${BASE_URL}/movie/popular?api_key=${API_KEY}`;
+    fetchMovie(selectedCategory);
+  }, [selectedCategory]);
+
+  function fetchMovie(category) {
+    const url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}`;
     console.log("API URL:", url); // Debugging: Log the API URL
 
     fetch(url)
@@ -30,7 +40,7 @@ const PageHome = () => {
         setError(`Failed to fetch movies: ${error.message}`);
         setLoading(false);
       });
-  }, []);
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -40,11 +50,17 @@ const PageHome = () => {
       <div className="movieFilter">
         <div>
           <label htmlFor="showMe">Show me</label>
-          <select name="showMe" id="showMe">
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+          <select
+            name="showMe"
+            id="showMe"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+          >
+            {categories.map(({ key, label }) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
           </select>
         </div>
         <div>
