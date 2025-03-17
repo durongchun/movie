@@ -7,19 +7,15 @@ main {
 ul {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 2rem;
-  row-gap: 4rem;
+  gap: 3rem;
 
   li {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    border: solid 1px gray;
+    border: solid 1px red;
     padding-right: 1rem;
     padding-bottom: 1rem;
-    align-content: center;
-    justify-items: center;
-    justify-content: center;
 
     button {
       background-color: transparent;
@@ -43,7 +39,6 @@ ul {
 .details {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 .movieFilter {
@@ -52,58 +47,12 @@ ul {
   gap: 2rem;
 }
 select {
-  min-width: 70px;
+  min-width: 200px;
   min-height: 50px;
   margin-left: 1rem;
   background-color: transparent;
   border: 2px, solid $red;
-  color: $light;
+  color: $red;
   margin-bottom: 2rem;
   font-size: 18px;
-}
-
-/*----Review---*/
-.star-rating {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.star {
-  font-size: 1.2rem;
-}
-
-.filled {
-  color: gold;
-}
-
-.half {
-  color: #80808045;
-}
-
-.half::before {
-  content: "⭐";
-  position: absolute;
-  left: 0;
-  width: 50%;
-  overflow: hidden;
-}
-
-.empty {
-  color: black;
-}
-
-.percentage {
-  margin-left: 8px;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.movie-item img {
-  margin-top: -30px;
-  max-width: 10rem;
-}
-
-.fiveStar {
-  border: 1px solid red;
 }

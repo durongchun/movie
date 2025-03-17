@@ -1,9 +1,18 @@
 // Footer
 footer {
+  display: flex;
+  flex-direction: row;
   background-color: $dark;
   padding: $section-padding;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
   p {
     @include flatten;
+  }
+  img {
+    max-height: 2rem;
+    border: 1px solid $grey;
   }
 }

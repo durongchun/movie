@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -14,14 +14,31 @@ const PageHome = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
+  const [releasedDate, setReleasedDate] = useState("2020");
+
+  // Generate release years from 2000 to the current year
+  const releaseYears = Array.from(
+    { length: new Date().getFullYear() - 1999 },
+    (_, i) => 2000 + i
+  );
 
   useEffect(() => {
-    fetchMovie(selectedCategory);
-  }, [selectedCategory]);
+    fetchMovie(selectedCategory, releasedDate);
+  }, [selectedCategory, releasedDate]);
 
-  function fetchMovie(category) {
-    const url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}`;
-    console.log("API URL:", url); // Debugging: Log the API URL
+  function fetchMovie(category, year) {
+    let url = "";
+
+    const sortByMap = {
+      popular: "popularity.desc",
+      top_rated: "vote_average.desc",
+      now_playing: "popularity.desc",
+      upcoming: "popularity.desc",
+    };
+
+    url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortByMap[category]}&primary_release_year=${year}`;
+
+    console.log("API URL:", url);
 
     fetch(url)
       .then((response) => {
@@ -31,15 +48,64 @@ const PageHome = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Data:", data); // Debugging: Log the API response
+        console.log("Data:", data);
         setMovies(data.results);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Fetch error:", error); // Debugging: Log the error
+        console.error("Fetch error:", error);
         setError(`Failed to fetch movies: ${error.message}`);
         setLoading(false);
       });
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    // Extract month, day, and year
+    const month = date.toLocaleString("default", { month: "short" }); // "Jul"
+    const day = date.getDate(); // 10
+    const year = date.getFullYear(); // 2020
+
+    // Format as "Mar 15, 2025"
+    return `${month} ${day}, ${year}`;
+  }
+
+  function ratingStar(voteAverage) {
+    // Convert vote_average to a 5-star scale
+    const ratingOutOf5 = voteAverage / 2;
+
+    // Calculate the number of filled, half-filled, and empty stars
+    const filledStars = Math.floor(ratingOutOf5);
+
+    const hasHalfStar = ratingOutOf5 % 1 !== 0; // Check if there's a decimal part
+    const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0); // Remaining empty stars
+
+    return (
+      <div className="star-rating">
+        {/* Display filled stars */}
+        {Array.from({ length: filledStars }).map((_, index) => (
+          <span key={`filled-${index}`} className="star filled">
+            ⭐
+          </span>
+        ))}
+
+        {/* Display half-filled star (if applicable) */}
+        {hasHalfStar && (
+          <span key="half" className="star half">
+            ⭐
+          </span>
+        )}
+
+        {/* Display empty stars */}
+        {Array.from({ length: emptyStars }).map((_, index) => (
+          <span key={`empty-${index}`} className="star empty"></span>
+        ))}
+
+        {/* Display percentage */}
+        <span className="percentage">{Math.round(voteAverage * 10)}%</span>
+      </div>
+    );
   }
 
   if (loading) return <p>Loading...</p>;
@@ -65,27 +131,38 @@ const PageHome = () => {
         </div>
         <div>
           <label htmlFor="releaseYear">Movies released in</label>
-          <select name="releaseYear" id="releaseYear">
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+          <select
+            name="releaseYear"
+            id="releaseYear"
+            value={releasedDate}
+            onChange={(e) => setReleasedDate(e.target.value)}
+          >
+            {releaseYears.map((key) => (
+              <option key={key} value={key}>
+                {key}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id} className="movie-item">
+          <li
+            key={movie.id}
+            className={`movie-item ${
+              movie.vote_average / 2 === 5 ? "fiveStar" : ""
+            }`}
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
             />
             <div className="details">
               <h4>{movie.title}</h4>
-              <p>{movie.vote_average}</p>
-              <p>{movie.release_date}</p>
-              <p>{movie.title}</p>
+              {/* Display the star rating */}
+              {ratingStar(movie.vote_average)}
+              <p>{formatDate(movie.release_date)}</p>
               <p className="overview">{movie.overview}</p>
               <button>More info</button>
             </div>
