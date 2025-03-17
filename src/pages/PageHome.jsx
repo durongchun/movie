@@ -148,7 +148,12 @@ const PageHome = () => {
 
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id} className="movie-item">
+          <li
+            key={movie.id}
+            className={`movie-item ${
+              movie.vote_average / 2 === 5 ? "fiveStar" : ""
+            }`}
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}

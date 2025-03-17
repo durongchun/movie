@@ -14,7 +14,7 @@ ul {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    border: solid 1px red;
+    border: solid 1px gray;
     padding-right: 1rem;
     padding-bottom: 1rem;
     align-content: center;
@@ -102,4 +102,8 @@ select {
 .movie-item img {
   margin-top: -30px;
   max-width: 10rem;
+}
+
+.fiveStar {
+  border: 1px solid red;
 }
