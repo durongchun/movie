@@ -1,9 +1,11 @@
 function Footer() {
   return (
     <footer>
-      <img src="" alt="MVDBlogo" />
-      <p>@2020 MVDB all rights reserved.</p>
-      <p>Created by Zahra Fatemi, Kyungmi Moon, Kay Watanabe</p>
+      <img src="../../public/movielogo-removebg-preview.png" alt="MVDBlogo" />
+      <div>
+        <p>&copy; {new Date().getFullYear()} MVDB all rights reserved.</p>
+        <p>Created by Zahra Fatemi, Kyungmi Moon, Kay Watanabe</p>
+      </div>
     </footer>
   );
 }
