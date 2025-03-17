@@ -1,0 +1,58 @@
+main {
+  padding: $section-padding;
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+
+  li {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    border: solid 1px red;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+
+    button {
+      background-color: transparent;
+      color: $light;
+      border: 1px solid $light;
+      width: 100%;
+      border-radius: 5px;
+    }
+  }
+}
+
+.overview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Show 3 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(1.2em * 3); /* Adjust based on line height */
+  line-height: 1.2em; /* Match this with your font size */
+}
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.movieFilter {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+select {
+  min-width: 200px;
+  min-height: 50px;
+  margin-left: 1rem;
+  background-color: transparent;
+  border: 2px, solid $red;
+  color: $red;
+  margin-bottom: 2rem;
+  font-size: 18px;
+}
