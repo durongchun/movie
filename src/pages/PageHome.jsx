@@ -27,15 +27,18 @@ const PageHome = () => {
   }, [selectedCategory, releasedDate]);
 
   function fetchMovie(category, year) {
-    var url = ``;
-    if (category) {
-      url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}`;
-    }
-    if (year) {
-      url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&primary_release_year=${year}`;
-    }
+    let url = "";
 
-    console.log("API URL:", url); // Debugging: Log the API URL
+    const sortByMap = {
+      popular: "popularity.desc",
+      top_rated: "vote_average.desc",
+      now_playing: "popularity.desc",
+      upcoming: "popularity.desc",
+    };
+
+    url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortByMap[category]}&primary_release_year=${year}`;
+
+    console.log("API URL:", url);
 
     fetch(url)
       .then((response) => {
@@ -45,12 +48,12 @@ const PageHome = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Data:", data); // Debugging: Log the API response
+        console.log("Data:", data);
         setMovies(data.results);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Fetch error:", error); // Debugging: Log the error
+        console.error("Fetch error:", error);
         setError(`Failed to fetch movies: ${error.message}`);
         setLoading(false);
       });
