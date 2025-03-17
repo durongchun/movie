@@ -14,13 +14,27 @@ const PageHome = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
+  const [releasedDate, setReleasedDate] = useState("2020");
+
+  // Generate release years from 2000 to the current year
+  const releaseYears = Array.from(
+    { length: new Date().getFullYear() - 1999 },
+    (_, i) => 2000 + i
+  );
 
   useEffect(() => {
-    fetchMovie(selectedCategory);
-  }, [selectedCategory]);
+    fetchMovie(selectedCategory, releasedDate);
+  }, [selectedCategory, releasedDate]);
 
-  function fetchMovie(category) {
-    const url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}`;
+  function fetchMovie(category, year) {
+    var url = ``;
+    if (category) {
+      url = `${BASE_URL}/movie/${category}?api_key=${API_KEY}`;
+    }
+    if (year) {
+      url = `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&primary_release_year=${year}`;
+    }
+
     console.log("API URL:", url); // Debugging: Log the API URL
 
     fetch(url)
@@ -65,11 +79,17 @@ const PageHome = () => {
         </div>
         <div>
           <label htmlFor="releaseYear">Movies released in</label>
-          <select name="releaseYear" id="releaseYear">
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
+          <select
+            name="releaseYear"
+            id="releaseYear"
+            value={releasedDate}
+            onChange={(e) => setReleasedDate(e.target.value)}
+          >
+            {releaseYears.map((key) => (
+              <option key={key} value={key}>
+                {key}
+              </option>
+            ))}
           </select>
         </div>
       </div>
