@@ -39,6 +39,7 @@ ul {
 .details {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
 }
 
 .movieFilter {
@@ -55,4 +56,41 @@ select {
   color: $red;
   margin-bottom: 2rem;
   font-size: 18px;
+}
+
+/*----Review---*/
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  font-size: 1.2rem;
+}
+
+.filled {
+  color: gold;
+}
+
+.half {
+  color: #80808045;
+}
+
+.half::before {
+  content: "⭐";
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
+.empty {
+  color: black;
+}
+
+.percentage {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  color: #666;
 }

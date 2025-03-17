@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -59,6 +59,55 @@ const PageHome = () => {
       });
   }
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    // Extract month, day, and year
+    const month = date.toLocaleString("default", { month: "short" }); // "Jul"
+    const day = date.getDate(); // 10
+    const year = date.getFullYear(); // 2020
+
+    // Format as "Mar 15, 2025"
+    return `${month} ${day}, ${year}`;
+  }
+
+  function ratingStar(voteAverage) {
+    // Convert vote_average to a 5-star scale
+    const ratingOutOf5 = voteAverage / 2;
+
+    // Calculate the number of filled, half-filled, and empty stars
+    const filledStars = Math.floor(ratingOutOf5);
+
+    const hasHalfStar = ratingOutOf5 % 1 !== 0; // Check if there's a decimal part
+    const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0); // Remaining empty stars
+
+    return (
+      <div className="star-rating">
+        {/* Display filled stars */}
+        {Array.from({ length: filledStars }).map((_, index) => (
+          <span key={`filled-${index}`} className="star filled">
+            ⭐
+          </span>
+        ))}
+
+        {/* Display half-filled star (if applicable) */}
+        {hasHalfStar && (
+          <span key="half" className="star half">
+            ⭐
+          </span>
+        )}
+
+        {/* Display empty stars */}
+        {Array.from({ length: emptyStars }).map((_, index) => (
+          <span key={`empty-${index}`} className="star empty"></span>
+        ))}
+
+        {/* Display percentage */}
+        <span className="percentage">{(voteAverage * 10).toFixed(1)}%</span>
+      </div>
+    );
+  }
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -106,9 +155,9 @@ const PageHome = () => {
             />
             <div className="details">
               <h4>{movie.title}</h4>
-              <p>{movie.vote_average}</p>
-              <p>{movie.release_date}</p>
-              <p>{movie.title}</p>
+              {/* Display the star rating */}
+              {ratingStar(movie.vote_average)}
+              <p>{formatDate(movie.release_date)}</p>
               <p className="overview">{movie.overview}</p>
               <button>More info</button>
             </div>
