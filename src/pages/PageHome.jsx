@@ -103,7 +103,7 @@ const PageHome = () => {
         ))}
 
         {/* Display percentage */}
-        <span className="percentage">{(voteAverage * 10).toFixed(1)}%</span>
+        <span className="percentage">{Math.round(voteAverage * 10)}%</span>
       </div>
     );
   }
