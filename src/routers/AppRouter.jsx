@@ -7,6 +7,7 @@ import Search from "../components/Search";
 import PageHome from "../pages/PageHome";
 import PageAbout from "../pages/PageAbout";
 import PageWatchLater from "../pages/PageWatchLater";
+import MovieDetails  from "../pages/MovieDetails";
 // import PageContact from "../pages/PageContact";
 // import PageNotFound from "../pages/PageNotFound";
 
@@ -19,6 +20,7 @@ function AppRouter() {
 
         <Routes>
           <Route path="/" exact element={<PageHome />} />
+          <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/about" element={<PageAbout />} />
           {/* <Route path="/contact" element={<PageContact />} /> */}
           {/* <Route path="*" element={<PageNotFound />} /> */}
