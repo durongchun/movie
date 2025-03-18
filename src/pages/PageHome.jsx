@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -164,7 +165,9 @@ const PageHome = () => {
               {ratingStar(movie.vote_average)}
               <p>{formatDate(movie.release_date)}</p>
               <p className="overview">{movie.overview}</p>
-              <button>More info</button>
+              <button>
+                <Link to={`/movie/${movie.id}`}>More info</Link>
+              </button>
             </div>
           </li>
         ))}
