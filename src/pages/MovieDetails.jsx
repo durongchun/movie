@@ -40,15 +40,15 @@ const MovieDetails = () => {
   if(!movie) return <p>No movie found</p>;
 
   return(
-    <main>
+    <main className="movie-details">
         <h2>{movie.title}</h2>
         <img
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
       />
-      <p><strong>Release Date:</strong>{movie.release_date}</p>
-      <p><strong>Rating:</strong>{movie.vote_average}</p>
-      <p><strong>Overview:</strong>{movie.overview}</p>
+      <p><strong>Release Date:</strong><br/> {movie.release_date}</p>
+      <p><strong>Rating:</strong><br /> {movie.vote_average}</p>
+      <p><strong>Overview:</strong><br/> {movie.overview}</p>
       <button onClick={() => window.history.back()}>Go Back</button>
     </main>
   )
