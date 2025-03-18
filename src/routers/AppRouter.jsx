@@ -9,6 +9,8 @@ import PageAbout from "../pages/PageAbout";
 import PageWatchLater from "../pages/PageWatchLater";
 import MovieDetails  from "../pages/MovieDetails";
 import { WatchLaterProvider } from "../context/WatchLaterContext";
+import { FavoriteProvider } from "../context/FavoriteContext";
+import PageFavorites from "../pages/PageFavorites";
 // import PageContact from "../pages/PageContact";
 // import PageNotFound from "../pages/PageNotFound";
 
@@ -16,6 +18,7 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <WatchLaterProvider>
+        <FavoriteProvider>
         <div className="wrapper">
           <Header />
           <Search />
@@ -24,12 +27,14 @@ function AppRouter() {
             <Route path="/" exact element={<PageHome />} />
             <Route path="/movie/:id" element={<MovieDetails />} />
             <Route path="/about" element={<PageAbout />} />
+            <Route path="/favourites" element={<PageFavorites />} />
             {/* <Route path="/contact" element={<PageContact />} /> */}
             {/* <Route path="*" element={<PageNotFound />} /> */}
             <Route path="/watch-later" element={<PageWatchLater />} />
           </Routes>
           <Footer />
         </div>
+        </FavoriteProvider>
       </WatchLaterProvider>
     </BrowserRouter>
   );

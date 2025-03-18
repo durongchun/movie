@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaHeart, FaRegBookmark, FaRegHeart } from "react-icons/fa";
 import { useWatchLater } from "../context/WatchLaterContext";
+import { useFavorite } from "../context/FavoriteContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -19,6 +20,8 @@ const PageHome = () => {
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
   const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
+  const {addToFavorite, removeFromFavorite, isInFavorite} = useFavorite();
+  
 
   // Generate release years from 2000 to the current year
   const releaseYears = Array.from(
@@ -166,10 +169,19 @@ const PageHome = () => {
             }}>
               {isInWatchLater(movie.id) ? <FaBookmark /> : <FaRegBookmark />}
             </div>
+           
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
             />
+             <div className="favorite-icon" onClick={(e) => {
+              e.preventDefault();
+              isInFavorite(movie.id) 
+                ? removeFromFavorite(movie.id)
+                : addToFavorite(movie);
+            }}>
+              {isInFavorite(movie.id) ? <FaHeart  /> : <FaRegHeart />}
+            </div>
             <div className="details">
               <h4>{movie.title}</h4>
               {/* Display the star rating */}
