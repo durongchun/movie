@@ -1,13 +1,15 @@
+import { Link } from 'react-router-dom';
+
 function Header() {
   return (
     <header>
       <div id="header-menu-logo">
         <img src="../../public/movielogo-removebg-preview.png" alt="MVDBlogo" />
         <div id="menu">
-          <a href="">Home</a>
-          <a href="">About</a>
-          <a href="">Favourites</a>
-          <a href="">Watch Later</a>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/favourites">Favourites</Link>
+          <Link to="/watch-later">Watch Later</Link>
         </div>
       </div>
     </header>

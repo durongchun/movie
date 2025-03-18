@@ -5,8 +5,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Search from "../components/Search";
 import PageHome from "../pages/PageHome";
-import MovieDetails  from "../pages/MovieDetails";
-// import PageAbout from "../pages/PageAbout";
+import PageAbout from "../pages/PageAbout";
+import PageWatchLater from "../pages/PageWatchLater";
 // import PageContact from "../pages/PageContact";
 // import PageNotFound from "../pages/PageNotFound";
 
@@ -19,10 +19,10 @@ function AppRouter() {
 
         <Routes>
           <Route path="/" exact element={<PageHome />} />
-          <Route path="/movie/:id" element={<MovieDetails />} />      
-          {/* <Route path="/about" element={<PageAbout />} /> */}
+          <Route path="/about" element={<PageAbout />} />
           {/* <Route path="/contact" element={<PageContact />} /> */}
           {/* <Route path="*" element={<PageNotFound />} /> */}
+          <Route path="/watch-later" element={<PageWatchLater />} />
         </Routes>
         <Footer />
       </div>
