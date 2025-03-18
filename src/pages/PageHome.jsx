@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { useWatchLater } from "../context/WatchLaterContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -16,6 +18,7 @@ const PageHome = () => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
 
   // Generate release years from 2000 to the current year
   const releaseYears = Array.from(
@@ -155,6 +158,14 @@ const PageHome = () => {
               movie.vote_average / 2 === 5 ? "fiveStar" : ""
             }`}
           >
+            <div className="watch-later-icon" onClick={(e) => {
+              e.preventDefault();
+              isInWatchLater(movie.id) 
+                ? removeFromWatchLater(movie.id)
+                : addToWatchLater(movie);
+            }}>
+              {isInWatchLater(movie.id) ? <FaBookmark /> : <FaRegBookmark />}
+            </div>
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}

@@ -11,6 +11,7 @@ ul {
   row-gap: 4rem;
 
   li {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
@@ -27,6 +28,21 @@ ul {
       border: 1px solid $light;
       width: 100%;
       border-radius: 5px;
+    }
+
+    .watch-later-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: $light;
+      z-index: 10;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $red;
+      }
     }
   }
 }
