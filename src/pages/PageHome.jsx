@@ -12,13 +12,16 @@ const categories = [
   { key: "upcoming", label: "Upcoming" },
 ];
 
-const PageHome = () => {
+const PageHome = ({ searchQuery }) => {
+  const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
-  const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
+  // const [searchQuery, setSearchQuery] = useState("");
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } =
+    useWatchLater();
 
   // Generate release years from 2000 to the current year
   const releaseYears = Array.from(
@@ -29,6 +32,19 @@ const PageHome = () => {
   useEffect(() => {
     fetchMovie(selectedCategory, releasedDate);
   }, [selectedCategory, releasedDate]);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      // If search is empty, show all fetched movies
+      setMovies(allMovies);
+    } else {
+      // Filter movies based on search query
+      const filteredMovies = allMovies.filter((movie) =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setMovies(filteredMovies);
+    }
+  }, [searchQuery, allMovies]);
 
   function fetchMovie(category, year) {
     let url = "";
@@ -54,6 +70,7 @@ const PageHome = () => {
       .then((data) => {
         console.log("Data:", data);
         setMovies(data.results);
+        setAllMovies(data.results);
         setLoading(false);
       })
       .catch((error) => {
@@ -158,12 +175,15 @@ const PageHome = () => {
               movie.vote_average / 2 === 5 ? "fiveStar" : ""
             }`}
           >
-            <div className="watch-later-icon" onClick={(e) => {
-              e.preventDefault();
-              isInWatchLater(movie.id) 
-                ? removeFromWatchLater(movie.id)
-                : addToWatchLater(movie);
-            }}>
+            <div
+              className="watch-later-icon"
+              onClick={(e) => {
+                e.preventDefault();
+                isInWatchLater(movie.id)
+                  ? removeFromWatchLater(movie.id)
+                  : addToWatchLater(movie);
+              }}
+            >
               {isInWatchLater(movie.id) ? <FaBookmark /> : <FaRegBookmark />}
             </div>
             <img
