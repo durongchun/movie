@@ -1,3 +1,4 @@
+
 import { FaSearch } from "react-icons/fa";
 import PropTypes from "prop-types";
 const SearchComponent = ({ searchQuery, setSearchQuery }) => {
