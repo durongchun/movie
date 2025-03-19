@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useWatchLater } from "../context/WatchLaterContext";
+import SearchComponent from "../components/Search";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -13,11 +14,13 @@ const categories = [
 ];
 
 const PageHome = () => {
+  const [allMovies, setAllMovies] = useState([]);
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
+  const [searchQuery, setSearchQuery] = useState("");
   const { addToWatchLater, removeFromWatchLater, isInWatchLater } = useWatchLater();
 
   // Generate release years from 2000 to the current year
@@ -29,6 +32,20 @@ const PageHome = () => {
   useEffect(() => {
     fetchMovie(selectedCategory, releasedDate);
   }, [selectedCategory, releasedDate]);
+
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      // If search is empty, show all fetched movies
+      setMovies(allMovies);
+    } else {
+      // Filter movies based on search query
+      const filteredMovies = allMovies.filter(movie =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setMovies(filteredMovies);
+    }
+  }, [searchQuery, allMovies]);
 
   function fetchMovie(category, year) {
     let url = "";
@@ -54,6 +71,7 @@ const PageHome = () => {
       .then((data) => {
         console.log("Data:", data);
         setMovies(data.results);
+        setAllMovies(data.results);
         setLoading(false);
       })
       .catch((error) => {
@@ -62,6 +80,37 @@ const PageHome = () => {
         setLoading(false);
       });
   }
+  const handleSearchMovies = () => {
+    if (searchQuery.trim() === "") {
+      // If search is cleared, fetch movies based on current filters
+      fetchMovie(selectedCategory, releasedDate);
+      return;
+    }
+
+    // Set loading state
+    setLoading(true);
+    
+    // Directly search for movies using the search endpoint
+    const searchUrl = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchQuery)}`;
+    
+    fetch(searchUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMovies(data.results);
+        setAllMovies(data.results);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Search error:", error);
+        setError(`Failed to search movies: ${error.message}`);
+        setLoading(false);
+      });
+  };
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -112,11 +161,25 @@ const PageHome = () => {
     );
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchMovies();
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <main>
+
+<div className="search-and-filter-container">
+        <SearchComponent 
+          searchQuery={searchQuery} 
+          setSearchQuery={setSearchQuery}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
       <div className="movieFilter">
         <div>
           <label htmlFor="showMe">Show me</label>
