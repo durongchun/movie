@@ -1,57 +1,61 @@
-.movie-details {  // 👈 Scoped to this component
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #1c1c1c;
-    color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    text-align: center;
-    font-family: "Arial", sans-serif;
-  
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 15px;
-      color: #ffcc00;
-    }
-  
-    img {
-      display: block;
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      margin: 20px auto;
-      border-radius: 10px;
-      box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
-    }
-  
-    p {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      text-align: left;
-      margin: 10px 20px;
-  
-      strong {
-        color: #ffcc00;
-      }
-    }
-  
-    button {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 20px;
-      font-size: 1rem;
-      font-weight: bold;
-      background-color: #ffcc00;
-      color: #1c1c1c;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-  
-      &:hover {
-        background-color: #e6b800;
-      }
+.movie-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  background-blend-mode: multiply;
+  border-bottom: 3.5px solid #c74649;
+  border-top: 3.5px solid #c74649;
+  position: relative;
+
+  .movie-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: $light;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 20px auto;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: left;
+
+    strong {
+      color: darkmagenta;
     }
   }
-  
+
+  button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #ffcc00;
+    color: #1c1c1c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #e6b800;
+    }
+  }
+}
