@@ -7,13 +7,15 @@
   border-bottom: 3.5px solid #c74649;
   border-top: 3.5px solid #c74649;
   position: relative;
-
-  .movie-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  .movieTitle {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    .favWatch {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
   }
 
   h2 {
@@ -42,20 +44,18 @@
   }
 
   button {
-    display: block;
     margin: 20px auto;
     padding: 12px 20px;
-    font-size: 1rem;
+    font-size: 12px;
     font-weight: bold;
-    background-color: #ffcc00;
-    color: #1c1c1c;
-    border: none;
-    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    border-radius: 30px;
     cursor: pointer;
     transition: background 0.3s ease;
 
     &:hover {
-      background-color: #e6b800;
+      background-color: purple;
     }
   }
 }

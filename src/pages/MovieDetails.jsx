@@ -48,7 +48,6 @@ const MovieDetails = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "white",
-        padding: "20px",
       }}
     >
       <img
@@ -56,7 +55,13 @@ const MovieDetails = () => {
         alt={movie.title}
       />
       <div>
-        <h2>{movie.title}</h2>
+        <div className="movieTitle">
+          <h2>{movie.title}</h2>
+          <div>
+            <button>Favorite this moive</button>
+            <button>Add to Watch later</button>
+          </div>
+        </div>
 
         <p>
           <strong>Release Date:</strong>
