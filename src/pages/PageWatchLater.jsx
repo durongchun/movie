@@ -1,17 +1,30 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark } from "react-icons/fa";
 import { useWatchLater } from "../context/WatchLaterContext";
 
-function PageWatchLater() {
+function PageWatchLater({ searchQuery }) {
   const { watchLaterList, removeFromWatchLater } = useWatchLater();
+  const [watchLaterLists, setWatchLaterLists] = useState(watchLaterList);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setWatchLaterLists(watchLaterList);
+    } else {
+      const filteredMovies = watchLaterList.filter((movie) =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setWatchLaterLists(filteredMovies);
+    }
+  }, [searchQuery, watchLaterList]);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
+    return date.toLocaleString("default", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   }
 
   function ratingStar(voteAverage) {
@@ -22,7 +35,7 @@ function PageWatchLater() {
 
     return (
       <div className="star-rating">
-        {Array.from({ length: filledStars }).map((_, index) => (
+        {Array.from({ length: filledStars }, (_, index) => (
           <span key={`filled-${index}`} className="star filled">
             ⭐
           </span>
@@ -32,7 +45,7 @@ function PageWatchLater() {
             ⭐
           </span>
         )}
-        {Array.from({ length: emptyStars }).map((_, index) => (
+        {Array.from({ length: emptyStars }, (_, index) => (
           <span key={`empty-${index}`} className="star empty"></span>
         ))}
         <span className="percentage">{Math.round(voteAverage * 10)}%</span>
@@ -42,11 +55,11 @@ function PageWatchLater() {
 
   return (
     <main className="watch-later-page">
-      {watchLaterList.length === 0 ? (
+      {watchLaterLists.length === 0 ? (
         <p>No movies in your watch later list yet.</p>
       ) : (
         <ul>
-          {watchLaterList.map((movie) => (
+          {watchLaterLists.map((movie) => (
             <li
               key={movie.id}
               className={`movie-item ${
@@ -65,7 +78,6 @@ function PageWatchLater() {
               />
               <div className="details">
                 <h4>
-                  {" "}
                   {movie.title.length > 20
                     ? movie.title.slice(0, 20) + "..."
                     : movie.title}

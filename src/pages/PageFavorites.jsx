@@ -1,15 +1,30 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useFavorite } from "../context/FavoriteContext";
 
-function PageFavorites() {
+function PageFavorites({ searchQuery }) {
   const { favoriteList, removeFromFavorite } = useFavorite();
+  const [favoriteLists, setFavoriteLists] = useState(favoriteList);
+
+  useEffect(() => {
+    if (searchQuery.trim() === "") {
+      setFavoriteLists(favoriteList);
+    } else {
+      const filteredMovies = favoriteList.filter((movie) =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFavoriteLists(filteredMovies);
+    }
+  }, [searchQuery, favoriteList]);
+
   function formatDate(dateString) {
     const date = new Date(dateString);
-    const month = date.toLocaleString("default", { month: "short" });
-    const day = date.getDate();
-    const year = date.getFullYear();
-    return `${month} ${day}, ${year}`;
+    return date.toLocaleString("default", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   }
 
   function ratingStar(voteAverage) {
@@ -20,7 +35,7 @@ function PageFavorites() {
 
     return (
       <div className="star-rating">
-        {Array.from({ length: filledStars }).map((_, index) => (
+        {Array.from({ length: filledStars }, (_, index) => (
           <span key={`filled-${index}`} className="star filled">
             ⭐
           </span>
@@ -30,20 +45,21 @@ function PageFavorites() {
             ⭐
           </span>
         )}
-        {Array.from({ length: emptyStars }).map((_, index) => (
+        {Array.from({ length: emptyStars }, (_, index) => (
           <span key={`empty-${index}`} className="star empty"></span>
         ))}
         <span className="percentage">{Math.round(voteAverage * 10)}%</span>
       </div>
     );
   }
+
   return (
     <main className="favorite-page">
-      {favoriteList.length === 0 ? (
+      {favoriteLists.length === 0 ? (
         <p>No favorite movie yet.</p>
       ) : (
         <ul>
-          {favoriteList.map((movie) => (
+          {favoriteLists.map((movie) => (
             <li
               key={movie.id}
               className={`movie-item ${
@@ -67,7 +83,6 @@ function PageFavorites() {
                     <FaHeart />
                   </div>
                 </div>
-
                 {ratingStar(movie.vote_average)}
                 <p>{formatDate(movie.release_date)}</p>
                 <p className="overview">{movie.overview}</p>

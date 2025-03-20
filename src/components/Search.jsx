@@ -11,7 +11,9 @@ const Search = ({ searchQuery, setSearchQuery, handleKeyDown }) => {
   return (
     <div className="search-container">
       {/* Show Search only on home page|location.pathname === "/watch-later" */}
-      {location.pathname === "/" && (
+      {(location.pathname === "/" ||
+        location.pathname === "/watch-later" ||
+        location.pathname === "/favourites") && (
         <div className="search-box">
           <FaSearch className="search-icon" />
           <input

@@ -45,8 +45,24 @@ function AppRouter() {
               />
               <Route path="/movie/:id" element={<MovieDetails />} />
               <Route path="/about" element={<PageAbout />} />
-              <Route path="/favourites" element={<PageFavorites />} />
-              <Route path="/watch-later" element={<PageWatchLater />} />
+              <Route
+                path="/favourites"
+                element={
+                  <PageFavorites
+                    searchQuery={searchQuery}
+                    handleKeyDown={handleKeyDown}
+                  />
+                }
+              />
+              <Route
+                path="/watch-later"
+                element={
+                  <PageWatchLater
+                    searchQuery={searchQuery}
+                    handleKeyDown={handleKeyDown}
+                  />
+                }
+              />
             </Routes>
             <Footer />
           </div>
