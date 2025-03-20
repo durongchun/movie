@@ -33,24 +33,24 @@ function AppRouter() {
               handleKeyDown={handleKeyDown}
             />
 
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <PageHome
-                    searchQuery={searchQuery}
-                    handleKeyDown={handleKeyDown}
-                  />
-                }
-              />
-              <Route path="/movie/:id" element={<MovieDetails />} />
-              <Route path="/about" element={<PageAbout />} />
-              <Route path="/favourites" element={<PageFavorites />} />
-              <Route path="/watch-later" element={<PageWatchLater />} />
-            </Routes>
-            <Footer />
-          </div>
-        </FavoriteProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PageHome
+                  searchQuery={searchQuery}
+                  handleKeyDown={handleKeyDown}
+                />
+              }
+            />
+            <Route path="/movie/:id" element={<MovieDetails searchQuery={searchQuery} />} />
+            <Route path="/about" element={<PageAbout />} />
+            <Route path="/watch-later" element={<PageWatchLater  searchQuery={searchQuery}/>} />
+            <Route path="/favorites" element={<PageFavorites searchQuery={searchQuery} />} />
+
+          </Routes>
+          <Footer />
+        </div>
       </WatchLaterProvider>
     </BrowserRouter>
   );

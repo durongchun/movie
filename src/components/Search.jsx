@@ -24,6 +24,7 @@ const Search = ({ searchQuery, setSearchQuery, handleKeyDown }) => {
 Search.propTypes = {
   searchQuery: PropTypes.string,
   setSearchQuery: PropTypes.func.isRequired,
+  handleKeyDown: PropTypes.func.isRequired
 };
 
 export default Search;

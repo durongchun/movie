@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useWatchLater } from "../context/WatchLaterContext";
+import useFilteredMovies from "../hook/useFilteredMovies";
+import PropTypes from "prop-types";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -14,12 +16,14 @@ const categories = [
 
 const PageHome = ({ searchQuery }) => {
   const [allMovies, setAllMovies] = useState([]);
-  const [movies, setMovies] = useState([]);
+  //const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
   // const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredMovies = useFilteredMovies(allMovies, searchQuery);
   const { addToWatchLater, removeFromWatchLater, isInWatchLater } =
     useWatchLater();
 
@@ -33,18 +37,18 @@ const PageHome = ({ searchQuery }) => {
     fetchMovie(selectedCategory, releasedDate);
   }, [selectedCategory, releasedDate]);
 
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      // If search is empty, show all fetched movies
-      setMovies(allMovies);
-    } else {
-      // Filter movies based on search query
-      const filteredMovies = allMovies.filter((movie) =>
-        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setMovies(filteredMovies);
-    }
-  }, [searchQuery, allMovies]);
+  // useEffect(() => {
+  //   if (searchQuery.trim() === "") {
+  //     // If search is empty, show all fetched movies
+  //     setMovies(allMovies);
+  //   } else {
+  //     // Filter movies based on search query
+  //     const filteredMovies = allMovies.filter((movie) =>
+  //       movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  //     );
+  //     setMovies(filteredMovies);
+  //   }
+  // }, [searchQuery, allMovies]);
 
   function fetchMovie(category, year) {
     let url = "";
@@ -69,7 +73,7 @@ const PageHome = ({ searchQuery }) => {
       })
       .then((data) => {
         console.log("Data:", data);
-        setMovies(data.results);
+        //setMovies(data.results);
         setAllMovies(data.results);
         setLoading(false);
       })
@@ -104,6 +108,7 @@ const PageHome = ({ searchQuery }) => {
 
     return (
       <div className="star-rating">
+
         {/* Display filled stars */}
         {Array.from({ length: filledStars }).map((_, index) => (
           <span key={`filled-${index}`} className="star filled">
@@ -168,7 +173,7 @@ const PageHome = ({ searchQuery }) => {
       </div>
 
       <ul>
-        {movies.map((movie) => (
+        {filteredMovies.map((movie) => (
           <li
             key={movie.id}
             className={`movie-item ${
@@ -210,5 +215,9 @@ const PageHome = ({ searchQuery }) => {
     </main>
   );
 };
+
+PageHome.propTypes = {
+  searchQuery: PropTypes.string.isRequired
+}
 
 export default PageHome;
