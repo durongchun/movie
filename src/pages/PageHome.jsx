@@ -199,7 +199,11 @@ const PageHome = ({ searchQuery }) => {
               {/* Display the star rating */}
               {ratingStar(movie.vote_average)}
               <p>{formatDate(movie.release_date)}</p>
-              <p className="overview">{movie.overview.slice(0, 80) + "..."}</p>
+              <p className="overview">
+                {movie.overview && movie.overview.trim() !== ""
+                  ? movie.overview.slice(0, 80) + "..."
+                  : "No detail information for now, please wait for our updating ..."}
+              </p>
               <button>
                 <Link to={`/movie/${movie.id}`}>More info</Link>
               </button>
