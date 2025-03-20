@@ -41,7 +41,6 @@ function PageFavorites() {
   }
   return (
     <main className="favorite-page">
-      <h2>Favorite List</h2>
       {favoriteList.length === 0 ? (
         <p>No favorite movie yet.</p>
       ) : (
@@ -61,7 +60,6 @@ function PageFavorites() {
                 }}
               >
                 <FaHeart />
-                <FaBookmark />
               </div>
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

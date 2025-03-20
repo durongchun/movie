@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FaBookmark, FaHeart, FaRegBookmark, FaRegHeart } from "react-icons/fa";
+import { useFavorite } from "../context/FavoriteContext";
+import { useWatchLater } from "../context/WatchLaterContext";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -9,6 +12,9 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToFavorite, removeFromFavorite, isInFavorite } = useFavorite();
+  const { addToWatchLater, removeFromWatchLater, isInWatchLater } =
+    useWatchLater();
 
   useEffect(() => {
     fetchMovieDetails();
@@ -57,9 +63,33 @@ const MovieDetails = () => {
       <div>
         <div className="movieTitle">
           <h2>{movie.title}</h2>
-          <div>
-            <button>Favorite this moive</button>
-            <button>Add to Watch later</button>
+          <div className="favWatch">
+            <button
+              className="favorite-icon"
+              onClick={(e) => {
+                e.preventDefault();
+                isInFavorite(movie.id)
+                  ? removeFromFavorite(movie.id)
+                  : addToFavorite(movie);
+              }}
+            >
+              <div>{isInFavorite(movie.id) ? <FaHeart /> : <FaRegHeart />}</div>
+              Favorite this moive
+            </button>
+            <button
+              className="favorite-icon"
+              onClick={(e) => {
+                e.preventDefault();
+                isInWatchLater(movie.id)
+                  ? removeFromWatchLater(movie.id)
+                  : addToWatchLater(movie);
+              }}
+            >
+              <div className="watch-later-icon">
+                {isInWatchLater(movie.id) ? <FaBookmark /> : <FaRegBookmark />}
+              </div>
+              Add to Watch later
+            </button>
           </div>
         </div>
 
