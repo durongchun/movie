@@ -196,11 +196,15 @@ const PageHome = ({ searchQuery }) => {
               alt={movie.title}
             />
             <div className="details">
-              <h4>{movie.title}</h4>
+              <h4>
+                {movie.title.length > 20
+                  ? movie.title.slice(0, 20) + "..."
+                  : movie.title}
+              </h4>
               {/* Display the star rating */}
               {ratingStar(movie.vote_average)}
               <p>{formatDate(movie.release_date)}</p>
-              <p className="overview">{movie.overview}</p>
+              <p className="overview">{movie.overview.slice(0, 80) + "..."}</p>
               <button>
                 <Link to={`/movie/${movie.id}`}>More info</Link>
               </button>

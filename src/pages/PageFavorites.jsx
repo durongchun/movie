@@ -1,6 +1,4 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { FaBookmark } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useFavorite } from "../context/FavoriteContext";
 import useFilteredMovies from "../hook/useFilteredMovies";
@@ -44,7 +42,6 @@ function PageFavorites({searchQuery}) {
   }
   return (
     <main className="favorite-page">
-      <h2>Favorite List</h2>
       {favoriteList.length === 0 ? (
         <p>No favorite movie yet.</p>
       ) : (
@@ -56,22 +53,24 @@ function PageFavorites({searchQuery}) {
                 movie.vote_average / 2 === 5 ? "fiveStar" : ""
               }`}
             >
-              <div
-                className="favorite-icon"
-                onClick={() => {
-                  console.log("Removing movie with ID:", movie.id);
-                  removeFromFavorite(movie.id);
-                }}
-              >
-                <FaHeart />
-                <FaBookmark />
-              </div>
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
               />
               <div className="details">
-                <h4>{movie.title}</h4>
+                <div className="title-favW">
+                  <h4>{movie.title}</h4>
+                  <div
+                    className="favorite-icon"
+                    onClick={() => {
+                      console.log("Removing movie with ID:", movie.id);
+                      removeFromFavorite(movie.id);
+                    }}
+                  >
+                    <FaHeart />
+                  </div>
+                </div>
+
                 {ratingStar(movie.vote_average)}
                 <p>{formatDate(movie.release_date)}</p>
                 <p className="overview">{movie.overview}</p>
