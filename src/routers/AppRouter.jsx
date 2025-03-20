@@ -8,6 +8,8 @@ import PageAbout from "../pages/PageAbout";
 import PageWatchLater from "../pages/PageWatchLater";
 import MovieDetails from "../pages/MovieDetails";
 import { WatchLaterProvider } from "../context/WatchLaterContext";
+import { FavoriteProvider } from "../context/FavoriteContext";
+import PageFavorites from "../pages/PageFavorites";
 
 function AppRouter() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,30 +24,33 @@ function AppRouter() {
   return (
     <BrowserRouter>
       <WatchLaterProvider>
-        <div className="wrapper">
-          <Header />
-          <Search
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            handleKeyDown={handleKeyDown}
-          />
-
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <PageHome
-                  searchQuery={searchQuery}
-                  handleKeyDown={handleKeyDown}
-                />
-              }
+        <FavoriteProvider>
+          <div className="wrapper">
+            <Header />
+            <Search
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              handleKeyDown={handleKeyDown}
             />
-            <Route path="/movie/:id" element={<MovieDetails />} />
-            <Route path="/about" element={<PageAbout />} />
-            <Route path="/watch-later" element={<PageWatchLater />} />
-          </Routes>
-          <Footer />
-        </div>
+
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <PageHome
+                    searchQuery={searchQuery}
+                    handleKeyDown={handleKeyDown}
+                  />
+                }
+              />
+              <Route path="/movie/:id" element={<MovieDetails />} />
+              <Route path="/about" element={<PageAbout />} />
+              <Route path="/favourites" element={<PageFavorites />} />
+              <Route path="/watch-later" element={<PageWatchLater />} />
+            </Routes>
+            <Footer />
+          </div>
+        </FavoriteProvider>
       </WatchLaterProvider>
     </BrowserRouter>
   );

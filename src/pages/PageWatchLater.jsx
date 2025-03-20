@@ -42,7 +42,6 @@ function PageWatchLater() {
 
   return (
     <main className="watch-later-page">
-      <h2>Watch Later List</h2>
       {watchLaterList.length === 0 ? (
         <p>No movies in your watch later list yet.</p>
       ) : (
@@ -54,8 +53,8 @@ function PageWatchLater() {
                 movie.vote_average / 2 === 5 ? "fiveStar" : ""
               }`}
             >
-              <div 
-                className="watch-later-icon" 
+              <div
+                className="watch-later-icon"
                 onClick={() => removeFromWatchLater(movie.id)}
               >
                 <FaBookmark />
@@ -65,7 +64,12 @@ function PageWatchLater() {
                 alt={movie.title}
               />
               <div className="details">
-                <h4>{movie.title}</h4>
+                <h4>
+                  {" "}
+                  {movie.title.length > 20
+                    ? movie.title.slice(0, 20) + "..."
+                    : movie.title}
+                </h4>
                 {ratingStar(movie.vote_average)}
                 <p>{formatDate(movie.release_date)}</p>
                 <p className="overview">{movie.overview}</p>

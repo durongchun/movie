@@ -30,3 +30,14 @@ header {
     object-fit: cover;
   }
 }
+
+/* Style for all navigation links */
+#menu .nav-link {
+  text-decoration: none;
+}
+
+/* Style for the active link */
+#menu .active {
+  color: green;
+  font-weight: bold;
+}

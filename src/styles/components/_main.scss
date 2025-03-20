@@ -9,6 +9,7 @@ ul {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 2rem;
   row-gap: 4rem;
+  align-items: start;
 
   li {
     position: relative;
@@ -16,18 +17,29 @@ ul {
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
     border: solid 1px gray;
-    padding-right: 1rem;
-    padding-bottom: 1rem;
-    align-content: center;
-    justify-items: center;
-    justify-content: center;
+    padding-right: 2.5rem;
+    padding-bottom: 2rem;
+
+    img {
+      width: 79%;
+      margin-top: -30px;
+      margin-left: 2rem;
+    }
 
     button {
       background-color: transparent;
-      color: $light;
+      font-size: 16px;
       border: 1px solid $light;
       width: 100%;
       border-radius: 5px;
+
+      a {
+        color: $light;
+        text-decoration: none;
+      }
+      &:hover {
+        background-color: green;
+      }
     }
 
     .watch-later-icon {
@@ -60,12 +72,14 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  justify-content: space-between;
 }
 
 .movieFilter {
   display: flex;
   flex-direction: row;
   gap: 2rem;
+  padding: 1rem;
 }
 select {
   min-width: 70px;
@@ -100,7 +114,7 @@ select {
 .half::before {
   content: "⭐";
   position: absolute;
-  left: 0;
+
   width: 50%;
   overflow: hidden;
 }
@@ -113,11 +127,6 @@ select {
   margin-left: 8px;
   font-size: 0.9rem;
   color: #666;
-}
-
-.movie-item img {
-  margin-top: -30px;
-  max-width: 10rem;
 }
 
 .fiveStar {
