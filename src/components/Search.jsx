@@ -1,22 +1,30 @@
+import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 const Search = ({ searchQuery, setSearchQuery, handleKeyDown }) => {
-  // Handle input change
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   };
+  const location = useLocation(); // Get current route
 
   return (
     <div className="search-container">
-      <FaSearch className="search-icon" />
-      <input
-        type="text"
-        placeholder="Search for a movie by title..."
-        value={searchQuery} // Controlled component
-        onChange={handleChange} // Update search query on change
-        onKeyDown={handleKeyDown} // Handle Enter key
-      />
+      {/* Show Search only on home page|location.pathname === "/watch-later" */}
+      {(location.pathname === "/" ||
+        location.pathname === "/watch-later" ||
+        location.pathname === "/favourites") && (
+        <div className="search-box">
+          <FaSearch className="search-icon" />
+          <input
+            type="text"
+            placeholder="Search a movie by title"
+            value={searchQuery}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      )}
     </div>
   );
 };
@@ -24,6 +32,7 @@ const Search = ({ searchQuery, setSearchQuery, handleKeyDown }) => {
 Search.propTypes = {
   searchQuery: PropTypes.string,
   setSearchQuery: PropTypes.func.isRequired,
+  handleKeyDown: PropTypes.func,
 };
 
 export default Search;

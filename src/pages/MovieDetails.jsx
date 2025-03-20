@@ -60,7 +60,7 @@ const MovieDetails = () => {
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
         alt={movie.title}
       />
-      <div>
+      <div className="rightside">
         <div className="movieTitle">
           <h2>{movie.title}</h2>
           <div className="favWatch">

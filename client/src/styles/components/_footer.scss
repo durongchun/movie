@@ -1,9 +1,0 @@
-// Footer
-footer {
-  background-color: $dark;
-  padding: $section-padding;
-
-  p {
-    @include flatten;
-  }
-}
