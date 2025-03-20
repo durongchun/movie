@@ -1,14 +1,5 @@
 
 import { FaSearch } from "react-icons/fa";
-<<<<<<< Updated upstream
-
-const SearchComponent = () => (
-  <div className="search-container">
-    <FaSearch className="search-icon" />
-  </div>
-);
-
-=======
 import PropTypes from "prop-types";
 const SearchComponent = ({ searchQuery, setSearchQuery }) => {
   return (
@@ -30,5 +21,4 @@ SearchComponent.propTypes = {
   setSearchQuery: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func,
 };
->>>>>>> Stashed changes
 export default SearchComponent;

@@ -8,6 +8,8 @@ import PageAbout from "../pages/PageAbout";
 import PageWatchLater from "../pages/PageWatchLater";
 import MovieDetails from "../pages/MovieDetails";
 import { WatchLaterProvider } from "../context/WatchLaterContext";
+import PageFavorites from "../pages/PageFavorites";
+
 
 function AppRouter() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,9 +42,11 @@ function AppRouter() {
                 />
               }
             />
-            <Route path="/movie/:id" element={<MovieDetails />} />
+            <Route path="/movie/:id" element={<MovieDetails searchQuery={searchQuery} />} />
             <Route path="/about" element={<PageAbout />} />
-            <Route path="/watch-later" element={<PageWatchLater />} />
+            <Route path="/watch-later" element={<PageWatchLater  searchQuery={searchQuery}/>} />
+            <Route path="/favorites" element={<PageFavorites searchQuery={searchQuery} />} />
+
           </Routes>
           <Footer />
         </div>

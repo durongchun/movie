@@ -1,10 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaBookmark } from "react-icons/fa";
+import PropTypes from "prop-types";
 import { useWatchLater } from "../context/WatchLaterContext";
 
-function PageWatchLater() {
+import useFilteredMovies from "../hook/useFilteredMovies";
+
+
+function PageWatchLater({searchQuery}) {
   const { watchLaterList, removeFromWatchLater } = useWatchLater();
+  
+  const filteredMovies = useFilteredMovies(watchLaterList, searchQuery);
+
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -40,20 +47,21 @@ function PageWatchLater() {
     );
   }
 
+ 
+
   return (
     <main className="watch-later-page">
       <h2>Watch Later List</h2>
+      {searchQuery && filteredMovies.length === 0 && (
+        <p>No movies found matching "{searchQuery}".</p>
+      )}
+
       {watchLaterList.length === 0 ? (
         <p>No movies in your watch later list yet.</p>
       ) : (
         <ul>
-          {watchLaterList.map((movie) => (
-            <li
-              key={movie.id}
-              className={`movie-item ${
-                movie.vote_average / 2 === 5 ? "fiveStar" : ""
-              }`}
-            >
+          {filteredMovies.map((movie) => (
+            <li key={movie.id} className={`movie-item ${movie.vote_average / 2 === 5 ? "fiveStar" : ""}`}>
               <div 
                 className="watch-later-icon" 
                 onClick={() => removeFromWatchLater(movie.id)}
@@ -79,6 +87,10 @@ function PageWatchLater() {
       )}
     </main>
   );
+}
+
+PageWatchLater.propTypes = {
+  searchQuery: PropTypes.string.isRequired
 }
 
 export default PageWatchLater;

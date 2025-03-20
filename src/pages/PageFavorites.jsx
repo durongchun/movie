@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { FaBookmark } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { useFavorite } from "../context/FavoriteContext";
+import useFilteredMovies from "../hook/useFilteredMovies";
 
-function PageFavorites() {
+function PageFavorites({searchQuery}) {
   const { favoriteList, removeFromFavorite } = useFavorite();
+  const filteredMovies = useFilteredMovies(favoriteList, searchQuery);
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     const month = date.toLocaleString("default", { month: "short" });
@@ -46,7 +49,7 @@ function PageFavorites() {
         <p>No favorite movie yet.</p>
       ) : (
         <ul>
-          {favoriteList.map((movie) => (
+          {filteredMovies.map((movie) => (
             <li
               key={movie.id}
               className={`movie-item ${
