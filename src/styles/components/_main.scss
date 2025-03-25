@@ -5,8 +5,8 @@ main {
 }
 
 ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   column-gap: 2rem;
   row-gap: 4rem;
   align-items: start;
@@ -77,8 +77,8 @@ ul {
 
 .movieFilter {
   display: flex;
-  flex-direction: row;
-  gap: 2rem;
+  flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
 }
 select {
@@ -131,4 +131,20 @@ select {
 
 .fiveStar {
   border: 1px solid red;
+}
+
+@media screen and (min-width: 1024px) {
+  .movieFilter {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 2rem;
+    row-gap: 4rem;
+    align-items: start;
+  }
 }
