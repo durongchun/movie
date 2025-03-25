@@ -19,11 +19,9 @@ const PageHome = ({ searchQuery }) => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("popular");
   const [releasedDate, setReleasedDate] = useState("2020");
-  // const [searchQuery, setSearchQuery] = useState("");
   const { addToWatchLater, removeFromWatchLater, isInWatchLater } =
     useWatchLater();
 
-  // Generate release years from 2000 to the current year
   const releaseYears = Array.from(
     { length: new Date().getFullYear() - 1999 },
     (_, i) => 2000 + i
@@ -84,7 +82,7 @@ const PageHome = ({ searchQuery }) => {
     const date = new Date(dateString);
 
     // Extract month, day, and year
-    const month = date.toLocaleString("default", { month: "short" }); // "Jul"
+    const month = date.toLocaleString("default", { month: "short" });
     const day = date.getDate(); // 10
     const year = date.getFullYear(); // 2020
 
@@ -96,11 +94,11 @@ const PageHome = ({ searchQuery }) => {
     // Convert vote_average to a 5-star scale
     const ratingOutOf5 = voteAverage / 2;
 
-    // Calculate the number of filled, half-filled, and empty stars
     const filledStars = Math.floor(ratingOutOf5);
-
-    const hasHalfStar = ratingOutOf5 % 1 !== 0; // Check if there's a decimal part
-    const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0); // Remaining empty stars
+    // Check if there's a decimal part
+    const hasHalfStar = ratingOutOf5 % 1 !== 0;
+    // Remaining empty stars
+    const emptyStars = 5 - filledStars - (hasHalfStar ? 1 : 0);
 
     return (
       <div className="star-rating">
