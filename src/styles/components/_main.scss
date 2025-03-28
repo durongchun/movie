@@ -2,6 +2,7 @@ main {
   // padding: $section-padding;
   display: flex;
   flex-direction: column;
+  padding-top: 1.5rem;
 }
 
 ul {
@@ -217,6 +218,7 @@ select {
     flex-direction: row;
     gap: 2rem;
     padding: 0;
+    margin-bottom: 1rem;
   }
   select {
     min-width: 70px;

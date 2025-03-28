@@ -72,7 +72,11 @@ function PageFavorites({ searchQuery }) {
               />
               <div className="details">
                 <div className="title-favW">
-                  <h4>{movie.title}</h4>
+                  <h4>
+                    {movie.title.length > 20
+                      ? movie.title.slice(0, 17) + "..."
+                      : movie.title}
+                  </h4>
                   <div
                     className="favorite-icon"
                     onClick={() => {
