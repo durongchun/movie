@@ -8,7 +8,12 @@ function Header() {
     <header>
       {/* Desktop Header */}
       <div id="header-menu-logo">
-        <img src="../../public/movielogo-removebg-preview.png" alt="MVDBlogo" />
+        <NavLink to="/">
+          <img
+            src="../../public/movielogo-removebg-preview.png"
+            alt="CINESTRElogo"
+          />
+        </NavLink>
         <div id="menu">
           <NavLink exact to="/" activeClassName="active" className="nav-link">
             Home
