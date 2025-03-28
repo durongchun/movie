@@ -15,23 +15,35 @@ function Header() {
           />
         </NavLink>
         <div id="menu">
-          <NavLink exact to="/" activeClassName="active" className="nav-link">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
             Home
           </NavLink>
-          <NavLink to="/about" activeClassName="active" className="nav-link">
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
             About
           </NavLink>
           <NavLink
             to="/favourites"
-            activeClassName="active"
-            className="nav-link"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
           >
             Favourites
           </NavLink>
           <NavLink
             to="/watch-later"
-            activeClassName="active"
-            className="nav-link"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
           >
             Watch Later
           </NavLink>
