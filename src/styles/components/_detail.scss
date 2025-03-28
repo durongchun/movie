@@ -66,6 +66,10 @@
   }
 }
 
+.rightside {
+  padding-top: 2rem;
+}
+
 @media screen and (min-width: 1024px) {
   .movie-details {
     display: grid;
@@ -81,5 +85,8 @@
       box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
       margin-left: 18rem;
     }
+  }
+  .rightside {
+    padding-right: 15rem;
   }
 }
