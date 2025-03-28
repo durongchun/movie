@@ -1,12 +1,13 @@
 .movie-details {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.85);
   background-blend-mode: multiply;
   border-bottom: 3.5px solid #c74649;
   border-top: 3.5px solid #c74649;
   position: relative;
+  padding: 3rem;
 
   .movieTitle {
     display: flex;
@@ -35,9 +36,7 @@
     width: 100%;
     max-width: 300px;
     height: auto;
-    margin: 20px auto;
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
-    margin-left: 18rem;
   }
 
   p {
@@ -63,6 +62,24 @@
 
     &:hover {
       background-color: purple;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .movie-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+
+    img {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      margin: 20px auto;
+      box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+      margin-left: 18rem;
     }
   }
 }
