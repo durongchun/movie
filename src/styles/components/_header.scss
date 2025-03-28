@@ -129,7 +129,7 @@ img {
       #menu {
         display: flex;
         flex-direction: row;
-        gap: 6rem;
+        gap: 1rem;
       }
     }
 
@@ -142,6 +142,11 @@ img {
   /* Style for all navigation links */
   #menu .nav-link {
     text-decoration: none;
+    border-bottom: 0px;
+  }
+
+  .nav-link:first-child {
+    padding-top: 0;
   }
 
   /* Style for the active link */
