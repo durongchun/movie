@@ -20,25 +20,35 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, []);
 
-  function fetchMovieDetails() {
-    const url = `${BASE_URL}/movie/${id}?api_key=${API_KEY}`;
+  const fetchMovieDetails = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+      );
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      const data = await response.json();
+      setMovie(data);
+      setLoading(false);
+    } catch (err) {
+      setError(`Failed to fetch movie details: ${err.message}`);
+      setLoading(false);
+    }
+  };
 
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error!  Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setMovie(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(`Failed to fetch movie details: ${error.message}`);
-        setLoading(false);
-      });
-  }
+  const handleFavoriteClick = async () => {
+    if (isInFavorite(movie.id)) {
+      await removeFromFavorite(movie.id);
+    } else {
+      const movieData = {
+        movieId: movie.id,
+        title: movie.title,
+        year: movie.release_date.split("-")[0],
+        posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+      };
+      await addToFavorite(movieData);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -64,22 +74,15 @@ const MovieDetails = () => {
         <div className="movieTitle">
           <h2>{movie.title}</h2>
           <div className="favWatch">
-            <button
-              className="favorite-icon"
-              onClick={(e) => {
-                e.preventDefault();
-                isInFavorite(movie.id)
-                  ? removeFromFavorite(movie.id)
-                  : addToFavorite(movie);
-              }}
-            >
+            <button className="favorite-icon" onClick={handleFavoriteClick}>
               <div>{isInFavorite(movie.id) ? <FaHeart /> : <FaRegHeart />}</div>
-              Favorite this moive
+              {isInFavorite(movie.id)
+                ? "Remove from Favorites"
+                : "Favorite this Movie"}
             </button>
             <button
               className="favorite-icon"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 isInWatchLater(movie.id)
                   ? removeFromWatchLater(movie.id)
                   : addToWatchLater(movie);
@@ -88,7 +91,9 @@ const MovieDetails = () => {
               <div className="watch-later-icon">
                 {isInWatchLater(movie.id) ? <FaBookmark /> : <FaRegBookmark />}
               </div>
-              Add to Watch later
+              {isInWatchLater(movie.id)
+                ? "Remove from Watch Later"
+                : "Add to Watch Later"}
             </button>
           </div>
         </div>
@@ -110,4 +115,5 @@ const MovieDetails = () => {
     </main>
   );
 };
+
 export default MovieDetails;
