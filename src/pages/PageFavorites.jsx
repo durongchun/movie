@@ -1,26 +1,18 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { useFavorite } from "../context/FavoriteContext";
 
 function PageFavorites({ searchQuery }) {
   const { favoriteList, removeFromFavorite } = useFavorite();
-  const [favoriteLists, setFavoriteLists] = useState(favoriteList);
 
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFavoriteLists(favoriteList);
-    } else {
-      const filteredMovies = favoriteList.filter((movie) =>
-        movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFavoriteLists(filteredMovies);
-    }
-  }, [searchQuery, favoriteList]);
+  const filteredFavorites = favoriteList.filter(
+    (movie) =>
+      searchQuery.trim() === "" ||
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleString("default", {
+    return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -40,11 +32,7 @@ function PageFavorites({ searchQuery }) {
             ⭐
           </span>
         ))}
-        {hasHalfStar && (
-          <span key="half" className="star half">
-            ⭐
-          </span>
-        )}
+        {hasHalfStar && <span className="star half">⭐</span>}
         {Array.from({ length: emptyStars }, (_, index) => (
           <span key={`empty-${index}`} className="star empty"></span>
         ))}
@@ -55,11 +43,11 @@ function PageFavorites({ searchQuery }) {
 
   return (
     <main className="favorite-page">
-      {favoriteLists.length === 0 ? (
-        <p>No favorite movie yet.</p>
+      {filteredFavorites.length === 0 ? (
+        <p>No favorite movies found</p>
       ) : (
         <ul>
-          {favoriteLists.map((movie) => (
+          {filteredFavorites.map((movie) => (
             <li
               key={movie.id}
               className={`movie-item ${
@@ -74,15 +62,12 @@ function PageFavorites({ searchQuery }) {
                 <div className="title-favW">
                   <h4>
                     {movie.title.length > 20
-                      ? movie.title.slice(0, 17) + "..."
+                      ? `${movie.title.slice(0, 17)}...`
                       : movie.title}
                   </h4>
                   <div
                     className="favorite-icon"
-                    onClick={() => {
-                      console.log("Removing movie with ID:", movie.id);
-                      removeFromFavorite(movie.id);
-                    }}
+                    onClick={() => removeFromFavorite(movie.id)}
                   >
                     <FaHeart />
                   </div>

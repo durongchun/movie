@@ -36,7 +36,12 @@ export const FavoriteProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        setFavoriteList((prev) => [...prev, movie]);
+        setFavoriteList((prev) => {
+          if (!prev.some((m) => m.id === movie.id)) {
+            return [...prev, movie];
+          }
+          return prev;
+        });
       } else {
         console.error("Failed to add movie to favorites");
       }
@@ -53,9 +58,7 @@ export const FavoriteProvider = ({ children }) => {
       });
 
       if (response.ok) {
-        setFavoriteList((prev) =>
-          prev.filter((movie) => movie.movieId !== movieId)
-        );
+        setFavoriteList((prev) => prev.filter((movie) => movie.id !== movieId));
       } else {
         console.error("Failed to remove movie from favorites");
       }
@@ -66,7 +69,7 @@ export const FavoriteProvider = ({ children }) => {
 
   // Check if a movie is in favorites
   const isInFavorite = (movieId) => {
-    return favoriteList.some((movie) => movie.movieId === movieId);
+    return favoriteList.some((movie) => movie.id === movieId);
   };
 
   return (

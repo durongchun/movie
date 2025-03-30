@@ -41,10 +41,12 @@ const MovieDetails = () => {
       await removeFromFavorite(movie.id);
     } else {
       const movieData = {
-        movieId: movie.id,
+        id: movie.id,
         title: movie.title,
-        year: movie.release_date.split("-")[0],
-        posterUrl: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        release_date: movie.release_date,
+        poster_path: movie.poster_path,
+        vote_average: movie.vote_average,
+        overview: movie.overview,
       };
       await addToFavorite(movieData);
     }
