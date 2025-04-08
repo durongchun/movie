@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 const FavoriteContext = createContext();
 export const useFavorite = () => useContext(FavoriteContext);
 
-const API_BASE_URL = "http://localhost:3000"; // Update this if backend is deployed
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL; // Ensure VITE_BACKEND_URL is defined in your .env file
 
 export const FavoriteProvider = ({ children }) => {
   const [favoriteList, setFavoriteList] = useState([]);

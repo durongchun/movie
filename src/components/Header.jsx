@@ -9,10 +9,7 @@ function Header() {
       {/* Desktop Header */}
       <div id="header-menu-logo">
         <NavLink to="/">
-          <img
-            src="../../public/movielogo-removebg-preview.png"
-            alt="CINESTRElogo"
-          />
+          <img src="/movielogo-removebg-preview.png" alt="CINESTRElogo" />
         </NavLink>
         <div id="menu">
           <NavLink
@@ -60,10 +57,7 @@ function Header() {
               <div className="hm-menu"></div>
             </div>
           </button>
-          <img
-            src="../../public/movielogo-removebg-preview.png"
-            alt="MVDBlogo"
-          />
+          <img src="/movielogo-removebg-preview.png" alt="MVDBlogo" />
         </div>
 
         {/* Mobile Menu */}

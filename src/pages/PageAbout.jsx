@@ -28,8 +28,8 @@ function PageAbout() {
             platform is designed to enhance your movie-watching experience.
           </p>
           <div className="movielogo">
-            <img src="../../public/video-camera.png" alt="logo" />
-            <img src="../../public/clapperboard.png" alt="logo" />
+            <img src="/video-camera.png" alt="logo" />
+            <img src="/clapperboard.png" alt="logo" />
           </div>
         </div>
       </div>
